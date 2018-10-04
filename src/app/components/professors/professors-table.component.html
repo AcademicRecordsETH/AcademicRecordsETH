@@ -1,0 +1,59 @@
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header width="10%"> ID </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'app-primary':element.isActive, 'app-accent':!element.isActive}">
+            {{element.id}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="organisation">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header width="15%"> 0rganisation </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'app-primary':element.isActive, 'app-accent':!element.isActive}">
+            {{element.organisation.name}} (ID={{element.organisation.id}})
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="viewOrganisation">
+        <th mat-header-cell *matHeaderCellDef width="15%"> </th>
+        <td mat-cell *matCellDef="let element">
+            <a mat-stroked-button color="{{element.isActive?'primary':'accent'}}" routerLink="/organisation-view/{{element.organisation.id}}">
+                <mat-icon aria-label="View organisation">visibility</mat-icon>
+                View organisation
+            </a>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="professorAddress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header width="35%"> Professor Address </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'app-primary':element.isActive, 'app-accent':!element.isActive}">
+            {{element.professorAddress}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header width="10%"> State </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'app-primary':element.isActive, 'app-accent':!element.isActive}">
+            <span *ngIf="element.isActive">Active</span>
+            <span *ngIf="!element.isActive">Inactive</span>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="changeState">
+        <th mat-header-cell *matHeaderCellDef width="15%"> </th>
+        <td mat-cell *matCellDef="let element">
+            <a *ngIf="canUpdate" mat-stroked-button color="{{element.isActive?'primary':'accent'}}" routerLink="/professor-state/{{element.id}}">
+                <mat-icon aria-label="Change state">swap_horiz</mat-icon>
+                Change professor state
+            </a>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>

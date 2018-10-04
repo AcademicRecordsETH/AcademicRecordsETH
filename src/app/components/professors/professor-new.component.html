@@ -1,0 +1,67 @@
+<div class="app-flex-container">
+    <div>
+        <h2>New professor</h2>
+    </div>
+</div>
+
+<mat-card *ngIf="error">
+    <div class="app-accent">{{error}}</div>
+</mat-card>
+
+<mat-card *ngIf="message">
+    <div class="app-primary">{{message}}</div>
+</mat-card>
+
+<div *ngIf="!(error || message)">
+
+    <div *ngIf="isLoading">
+        <mat-spinner></mat-spinner> Loading...
+    </div>
+
+    <div *ngIf="!isLoading">
+
+        <div *ngIf="isCreating">
+            <mat-spinner></mat-spinner> Creating professor...
+        </div>
+        <div *ngIf="!isCreating">
+            <mat-form-field>
+                <div class="app-flex-container">
+                    <input value="{{professor.organisation.name}} (ID={{professor.organisation.id}})" matInput placeholder="Organisation" disabled>
+                    <a mat-stroked-button color="primary" routerLink="/organisation-view/{{professor.organisation.id}}">
+                        <mat-icon aria-label="View organisation">visibility</mat-icon>
+                        View organisation&nbsp;&nbsp;
+                    </a>
+                </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input [(ngModel)]="professor.professorAddress" matInput placeholder="Professor Address">
+            </mat-form-field>
+
+            <mat-slide-toggle [(ngModel)]="professor.isActive" color="primary">
+                <span *ngIf="professor.isActive">Active</span>
+                <span *ngIf="!professor.isActive">Inactive</span>
+            </mat-slide-toggle>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="app-flex-container">
+    <div>
+        &nbsp;
+        <br />
+    </div>
+    <div>
+        <a mat-button routerLink="/professors">
+            <mat-icon aria-label="Cancel">arrow_back</mat-icon>
+            Return
+        </a>
+        &nbsp;
+        <button mat-raised-button color="accent" (click)="create()" *ngIf="!error && !message && !isCreating" [disabled]="!professor.organisation || !professor.professorAddress">
+            <mat-icon aria-label="Save">save</mat-icon>
+            Save
+        </button>
+    </div>
+</div>

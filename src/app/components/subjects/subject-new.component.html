@@ -1,0 +1,79 @@
+<div class="app-flex-container">
+    <div>
+        <h2>New subject</h2>
+    </div>
+</div>
+
+<mat-card *ngIf="error">
+    <div class="app-accent">{{error}}</div>
+</mat-card>
+
+<mat-card *ngIf="message">
+    <div class="app-primary">{{message}}</div>
+</mat-card>
+
+<div *ngIf="!(error || message)">
+
+    <div *ngIf="isLoading">
+        <mat-spinner></mat-spinner> Loading...
+    </div>
+
+    <div *ngIf="!isLoading">
+
+        <div *ngIf="isCreating">
+            <mat-spinner></mat-spinner> Creating subject...
+        </div>
+        <div *ngIf="!isCreating">
+            <mat-form-field>
+                <div class="app-flex-container">
+                    <input value="{{organisation.name}} (ID={{organisation.id}})" matInput placeholder="Organisation" disabled>
+                    <a mat-stroked-button color="primary" routerLink="/organisation-view/{{organisation.id}}">
+                        <mat-icon aria-label="View organisation">visibility</mat-icon>
+                        View organisation&nbsp;&nbsp;
+                    </a>
+                </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select placeholder="Period" [(ngModel)]="subject.period">
+                    <mat-option *ngFor="let period of periods" [value]="period">
+                        {{period.name}} (ID={{period.id}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input [(ngModel)]="subject.name" matInput placeholder="Name">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input [(ngModel)]="subject.price" matInput placeholder="Price">
+            </mat-form-field>
+
+            <mat-slide-toggle [(ngModel)]="subject.isActive" color="primary">
+                <span *ngIf="subject.isActive">Active</span>
+                <span *ngIf="!subject.isActive">Inactive</span>
+            </mat-slide-toggle>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="app-flex-container">
+    <div>
+        &nbsp;
+        <br />
+    </div>
+    <div>
+        <a mat-button routerLink="/subjects">
+            <mat-icon aria-label="Cancel">arrow_back</mat-icon>
+            Return
+        </a>
+        &nbsp;
+        <button mat-raised-button color="accent" (click)="create()" *ngIf="!error && !message && !isCreating" [disabled]="!subject.period || !subject.name || !subject.price">
+            <mat-icon aria-label="Save">save</mat-icon>
+            Save
+        </button>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="app-flex-container">
+    <div>
+        <h2>Enrollment</h2>
+    </div>
+</div>
+
+<mat-card *ngIf="error">
+    <div class="app-accent">{{error}}</div>
+</mat-card>
+
+<div *ngIf="!error">
+
+    <div *ngIf="isLoading">
+        <mat-spinner></mat-spinner> Loading...
+    </div>
+
+    <div *ngIf="!isLoading">
+        <mat-form-field>
+            <input [(ngModel)]="enrollment.id" matInput placeholder="ID" disabled>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="app-flex-container">
+                <input value="{{enrollment.student.organisation.name}} (ID={{enrollment.student.organisation.id}})" matInput placeholder="Organisation"
+                    disabled>
+                <a mat-stroked-button color="primary" routerLink="/organisation-view/{{enrollment.student.organisation.id}}">
+                    <mat-icon aria-label="View organisation">visibility</mat-icon>
+                    View organisation&nbsp;&nbsp;
+                </a>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="app-flex-container">
+                <input value="{{enrollment.subject.period.name}} (Period ID={{enrollment.subject.period.id}})" matInput placeholder="Period"
+                    disabled>
+                <a mat-stroked-button color="primary" routerLink="/period-view/{{enrollment.subject.period.id}}">
+                    <mat-icon aria-label="View period">visibility</mat-icon>
+                    View period&nbsp;&nbsp;
+                </a>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="app-flex-container">
+                <input value="{{enrollment.subject.name}} (ID={{enrollment.subject.id}})" matInput
+                    placeholder="Subject" disabled>
+                <a mat-stroked-button color="primary" routerLink="/subject-view/{{enrollment.subject.id}}">
+                    <mat-icon aria-label="View subject">visibility</mat-icon>
+                    View subject&nbsp;&nbsp;
+                </a>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="app-flex-container">
+                <input value="{{enrollment.student.studentCode}} (ID={{enrollment.student.id}})"
+                    matInput placeholder="Student" disabled>
+                <a mat-stroked-button color="primary" routerLink="/student-view/{{enrollment.student.id}}">
+                    <mat-icon aria-label="View student">visibility</mat-icon>
+                    View student&nbsp;&nbsp;
+                </a>
+            </div>
+        </mat-form-field>
+
+        <mat-slide-toggle [(ngModel)]="enrollment.isActive" color="primary" disabled>
+            <span *ngIf="enrollment.isActive">Active</span>
+            <span *ngIf="!enrollment.isActive">Inactive</span>
+        </mat-slide-toggle>
+    </div>
+
+</div>
+
+<br />
+
+<div class="app-flex-container">
+    <div>
+        &nbsp;
+        <br />
+    </div>
+    <div>
+        <a mat-button (click)="goBack()">
+            <mat-icon aria-label="Cancel">arrow_back</mat-icon>
+            Return
+        </a>
+    </div>
+</div>

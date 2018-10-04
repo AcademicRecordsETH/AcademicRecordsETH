@@ -1,0 +1,88 @@
+<div class="app-flex-container">
+    <div>
+        <h2>New teaching</h2>
+    </div>
+</div>
+
+<mat-card *ngIf="error">
+    <div class="app-accent">{{error}}</div>
+</mat-card>
+
+<mat-card *ngIf="message">
+    <div class="app-primary">{{message}}</div>
+</mat-card>
+
+<div *ngIf="!(error || message)">
+
+    <div *ngIf="isLoading()">
+        <mat-spinner></mat-spinner> Loading...
+    </div>
+
+    <div *ngIf="!isLoading()">
+
+        <div *ngIf="isCreating">
+            <mat-spinner></mat-spinner> Creating teaching...
+        </div>
+        <div *ngIf="!isCreating">
+            <mat-form-field>
+                <div class="app-flex-container">
+                    <input value="{{organisation.name}} (ID={{organisation.id}})" matInput placeholder="Organisation"
+                        disabled>
+                    <a mat-stroked-button color="primary" routerLink="/organisation-view/{{organisation.id}}">
+                        <mat-icon aria-label="View organisation">visibility</mat-icon>
+                        View organisation&nbsp;&nbsp;
+                    </a>
+                </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select placeholder="Period" [(ngModel)]="periodSelected" (selectionChange)="reloadArrays()">
+                    <mat-option *ngFor="let period of periods" [value]="period">
+                        {{period.name}} (ID={{period.id}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select placeholder="Subject" [(ngModel)]="teaching.subject">
+                    <mat-option *ngFor="let subject of subjects" [value]="subject">
+                        {{subject.name}} (ID={{subject.id}}, Period ID={{subject.period.id}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select placeholder="Professor" [(ngModel)]="teaching.professor">
+                    <mat-option *ngFor="let professor of professors" [value]="professor">
+                        {{professor.professorAddress}} (ID={{professor.id}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-slide-toggle [(ngModel)]="teaching.isActive" color="primary">
+                <span *ngIf="teaching.isActive">Active</span>
+                <span *ngIf="!teaching.isActive">Inactive</span>
+            </mat-slide-toggle>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="app-flex-container">
+    <div>
+        &nbsp;
+        <br />
+    </div>
+    <div>
+        <a mat-button routerLink="/teachings">
+            <mat-icon aria-label="Cancel">arrow_back</mat-icon>
+            Return
+        </a>
+        &nbsp;
+        <button mat-raised-button color="accent" (click)="create()" *ngIf="!error && !message && !isCreating" [disabled]="!teaching.subject || !teaching.professor">
+            <mat-icon aria-label="Save">save</mat-icon>
+            Save
+        </button>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+<div class="app-flex-container">
+    <div>
+        <h2>Change grade state</h2>
+    </div>
+</div>
+
+<mat-card *ngIf="error">
+    <div class="app-accent">{{error}}</div>
+</mat-card>
+
+<mat-card *ngIf="message">
+    <div class="app-primary">{{message}}</div>
+</mat-card>
+
+<div *ngIf="!(error || message)">
+
+    <div *ngIf="isLoading">
+        <mat-spinner></mat-spinner> Loading...
+    </div>
+
+    <div *ngIf="!isLoading">
+
+        <div *ngIf="isUpdating">
+            <mat-spinner></mat-spinner> Updating...
+        </div>
+
+        <div *ngIf="!isUpdating">
+            <mat-form-field>
+                <input [(ngModel)]="grade.id" matInput placeholder="ID" disabled>
+            </mat-form-field>
+
+            <mat-form-field>
+                <div class="app-flex-container">
+                    <input value="{{grade.professor.organisation.name}} (ID={{grade.professor.organisation.id}})" matInput placeholder="Organisation"
+                        disabled>
+                    <a mat-stroked-button color="primary" routerLink="/organisation-view/{{grade.professor.organisation.id}}">
+                        <mat-icon aria-label="View organisation">visibility</mat-icon>
+                        View organisation&nbsp;&nbsp;
+                    </a>
+                </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <div class="app-flex-container">
+                    <input value="{{grade.professor.professorAddress}} (ID={{grade.professor.id}})" matInput placeholder="Professor" disabled>
+                    <a mat-stroked-button color="primary" routerLink="/professor-view/{{grade.professor.id}}">
+                        <mat-icon aria-label="View professor">visibility</mat-icon>
+                        View professor&nbsp;&nbsp;
+                    </a>
+                </div>
+            </mat-form-field>
+            
+            <mat-form-field>
+                <div class="app-flex-container">
+                    <input value="{{grade.enrollment.subject.period.name}} (Period ID={{grade.enrollment.subject.period.id}})" matInput placeholder="Period"
+                        disabled>
+                    <a mat-stroked-button color="primary" routerLink="/period-view/{{grade.enrollment.subject.period.id}}">
+                        <mat-icon aria-label="View period">visibility</mat-icon>
+                        View period&nbsp;&nbsp;
+                    </a>
+                </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <div class="app-flex-container">
+                    <input value="{{grade.enrollment.subject.name}} (Subject ID={{grade.enrollment.subject.id}})" matInput placeholder="Subject"
+                        disabled>
+                    <a mat-stroked-button color="primary" routerLink="/subject-view/{{grade.enrollment.subject.id}}">
+                        <mat-icon aria-label="View subject">visibility</mat-icon>
+                        View subject&nbsp;&nbsp;
+                    </a>
+                </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <div class="app-flex-container">
+                    <input value="{{grade.enrollment.student.studentCode}} (Student ID={{grade.enrollment.student.id}})" matInput placeholder="Student"
+                        disabled>
+                    <a mat-stroked-button color="primary" routerLink="/student-view/{{grade.enrollment.student.id}}">
+                        <mat-icon aria-label="View student">visibility</mat-icon>
+                        View student&nbsp;&nbsp;
+                    </a>
+                </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input [(ngModel)]="grade.grade" matInput placeholder="Grade" disabled>
+            </mat-form-field>
+
+            <mat-slide-toggle [(ngModel)]="grade.isActive" color="primary">
+                <span *ngIf="grade.isActive">Active</span>
+                <span *ngIf="!grade.isActive">Inactive</span>
+            </mat-slide-toggle>
+        </div>
+
+    </div>
+
+</div>
+
+<br />
+
+<div class="app-flex-container">
+    <div>
+        &nbsp;
+        <br />
+    </div>
+    <div>
+        <a mat-button routerLink="/grades">
+            <mat-icon aria-label="Cancel">arrow_back</mat-icon>
+            Return
+        </a>
+        &nbsp;
+        <button mat-raised-button color="accent" (click)="update()" *ngIf="!error && !message && !isLoading && !isUpdating" [disabled]="this.originalState === this.grade.isActive">
+            <mat-icon aria-label="Save">save</mat-icon>
+            Save
+        </button>
+    </div>
+</div>

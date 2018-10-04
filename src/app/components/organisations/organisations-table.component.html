@@ -1,0 +1,39 @@
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header width="10%"> ID </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'app-primary':element.isActive, 'app-accent':!element.isActive}">
+            {{element.id}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ownerAddress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header width="30%"> Owner Address </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'app-primary':element.isActive, 'app-accent':!element.isActive}">
+            {{element.ownerAddress}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header width="35%"> Name </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'app-primary':element.isActive, 'app-accent':!element.isActive}">
+            {{element.name}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header width="25%"> State </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'app-primary':element.isActive, 'app-accent':!element.isActive}">
+            <span *ngIf="element.isActive">Active</span>
+            <span *ngIf="!element.isActive">Inactive</span>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>

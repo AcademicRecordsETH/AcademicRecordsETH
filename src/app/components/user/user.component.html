@@ -1,0 +1,172 @@
+<div class="app-flex-container">
+    <h2 class="app-sidenav-name">
+        User
+    </h2>
+</div>
+
+<mat-card *ngIf="error">
+    <div class="app-accent">{{error}}</div>
+</mat-card>
+
+<div *ngIf="!error">
+
+    <mat-card>
+        <div class="app-primary">Your user address is {{userAddress}}.</div>
+        <br />
+        <a mat-raised-button color="accent" routerLink="/enrollment-new">
+            <mat-icon aria-label="Add enrollment">add</mat-icon>
+            Add enrollment
+        </a>
+    </mat-card>
+
+    <br/>
+
+    <mat-card>
+        <div *ngIf="isLoadingOwner">
+            <mat-spinner></mat-spinner> Loading user organisation as owner...
+        </div>
+
+        <div *ngIf="!isLoadingOwner">
+
+            <div *ngIf="organisationOwner">
+                <h3>You are the owner of the organisation:</h3>
+                <app-organisation [organisation]="organisationOwner" [canUpdate]="false"></app-organisation>
+                <a mat-raised-button color="accent" routerLink="/organisation-owner/{{organisationOwner.id}}">
+                    <mat-icon aria-label="Change owner">supervisor_account</mat-icon>
+                    Change owner
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/organisation-state/{{organisationOwner.id}}">
+                    <mat-icon aria-label="Change state">swap_horiz</mat-icon>
+                    Change state
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/administrator-new">
+                    <mat-icon aria-label="Add administrator">add</mat-icon>
+                    Add administrator
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/administrators">
+                    <mat-icon aria-label="Manage administrators">list</mat-icon>
+                    Manage administrators
+                </a>
+            </div>
+
+            <div *ngIf="!organisationOwner">
+                <h3>You are not the owner of any organizations.</h3>
+                <a mat-raised-button color="accent" routerLink="/organisation-new">
+                    <mat-icon aria-label="Add organisation">add</mat-icon>
+                    Add organisation
+                </a>
+            </div>
+
+        </div>
+    </mat-card>
+
+    <br/>
+
+    <mat-card>
+        <div *ngIf="isLoadingAdministrator">
+            <mat-spinner></mat-spinner> Loading user organisation as administrator...
+        </div>
+
+        <div *ngIf="!isLoadingAdministrator">
+
+            <div *ngIf="organisationAdministrator">
+                <h3>You are the administrator of the organisation:</h3>
+                <app-organisation [organisation]="organisationAdministrator" [canUpdate]="false"></app-organisation>
+                <a mat-raised-button color="accent" routerLink="/periods">
+                    <mat-icon aria-label="Manage periods">list</mat-icon>
+                    Manage periods
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/subjects">
+                    <mat-icon aria-label="Manage subjects">list</mat-icon>
+                    Manage subjects
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/students">
+                    <mat-icon aria-label="Manage students">list</mat-icon>
+                    Manage students
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/professors">
+                    <mat-icon aria-label="Manage professors">list</mat-icon>
+                    Manage professors
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/teachings">
+                    <mat-icon aria-label="Manage teachings">list</mat-icon>
+                    Manage teachings
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/enrollments-new">
+                    <mat-icon aria-label="Add enrollments">list</mat-icon>
+                    Manage enrollments
+                </a>
+                <br/>
+                <br/>
+                <a mat-raised-button color="accent" routerLink="/period-new">
+                    <mat-icon aria-label="Add period">add</mat-icon>
+                    Add period
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/subject-new">
+                    <mat-icon aria-label="Add subject">add</mat-icon>
+                    Add subject
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/subject-new">
+                    <mat-icon aria-label="Add student">add</mat-icon>
+                    Add student
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/professor-new">
+                    <mat-icon aria-label="Add professor">add</mat-icon>
+                    Add professor
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/teaching-new">
+                    <mat-icon aria-label="Add teaching">add</mat-icon>
+                    Add teaching
+                </a>
+            </div>
+
+            <div *ngIf="!organisationAdministrator">
+                <h3>You are not the administrator of any organizations.</h3>
+            </div>
+
+        </div>
+    </mat-card>
+
+    <br/>
+
+    <mat-card>
+        <div *ngIf="isLoadingProfessor">
+            <mat-spinner></mat-spinner> Loading user organisation as professor...
+        </div>
+
+        <div *ngIf="!isLoadingProfessor">
+
+            <div *ngIf="organisationProfessor">
+                <h3>You are the professor of the organisation:</h3>
+                <app-organisation [organisation]="organisationProfessor" [canUpdate]="false"></app-organisation>
+                <a mat-raised-button color="accent" routerLink="/grade-new">
+                    <mat-icon aria-label="Add grade">add</mat-icon>
+                    Add grade
+                </a>
+                &nbsp;
+                <a mat-raised-button color="accent" routerLink="/grades">
+                    <mat-icon aria-label="Manage grades">list</mat-icon>
+                    Manage grades
+                </a>
+            </div>
+
+            <div *ngIf="!organisationProfessor">
+                <h3>You are not the professor of any organizations.</h3>
+            </div>
+
+        </div>
+    </mat-card>
+
+</div>

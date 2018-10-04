@@ -1,0 +1,74 @@
+<div class="app-flex-container">
+    <div>
+        <h2>Change student state</h2>
+    </div>
+</div>
+
+<mat-card *ngIf="error">
+    <div class="app-accent">{{error}}</div>
+</mat-card>
+
+<mat-card *ngIf="message">
+    <div class="app-primary">{{message}}</div>
+</mat-card>
+
+<div *ngIf="!(error || message)">
+
+    <div *ngIf="isLoading">
+        <mat-spinner></mat-spinner> Loading...
+    </div>
+
+    <div *ngIf="!isLoading">
+
+        <div *ngIf="isUpdating">
+            <mat-spinner></mat-spinner> Updating...
+        </div>
+
+        <div *ngIf="!isUpdating">
+            <mat-form-field>
+                <input [(ngModel)]="student.id" matInput placeholder="ID" disabled>
+            </mat-form-field>
+
+            <mat-form-field>
+                <div class="app-flex-container">
+                    <input value="{{student.organisation.name}} (ID={{student.organisation.id}})" matInput placeholder="Organisation" disabled>
+                    <a mat-stroked-button color="primary" routerLink="/organisation-view/{{student.organisation.id}}">
+                        <mat-icon aria-label="View organisation">visibility</mat-icon>
+                        View organisation&nbsp;&nbsp;
+                    </a>
+                </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input [(ngModel)]="student.studentCode" matInput placeholder="Student Code" disabled>
+            </mat-form-field>
+
+            <mat-slide-toggle [(ngModel)]="student.isActive" color="primary">
+                <span *ngIf="student.isActive">Active</span>
+                <span *ngIf="!student.isActive">Inactive</span>
+            </mat-slide-toggle>
+        </div>
+
+    </div>
+
+</div>
+
+<br />
+
+<div class="app-flex-container">
+    <div>
+        &nbsp;
+        <br />
+    </div>
+    <div>
+        <a mat-button routerLink="/students">
+            <mat-icon aria-label="Cancel">arrow_back</mat-icon>
+            Return
+        </a>
+        &nbsp;
+        <button mat-raised-button color="accent" (click)="update()" *ngIf="!error && !message && !isLoading && !isUpdating" [disabled]="this.originalState === this.student.isActive">
+            <mat-icon aria-label="Save">save</mat-icon>
+            Save
+        </button>
+    </div>
+</div>
